@@ -1,0 +1,16 @@
+{
+  "name": "mat42coin-deployment",
+  "version": "1.0.0",
+  "description": "Scripts de déploiement pour Mat42Coin (ERC-20 sur Ethereum Sepolia)",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network hardhat",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "verify": "npx hardhat verify --network sepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "dotenv": "^16.0.0",
+    "hardhat": "^2.19.0"
+  }
+}

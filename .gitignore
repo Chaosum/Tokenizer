@@ -1,0 +1,12 @@
+# ⚠️ Ne jamais committer les secrets
+deployment/.env
+
+# Dépendances Node.js
+deployment/node_modules/
+
+# Artifacts Hardhat (générés à la compilation)
+deployment/artifacts/
+deployment/cache/
+
+# Fichiers système
+.DS_Store
