@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-// ============================================================
-//  Mat42Coin — ERC-20 Token
-//  Standard : ERC-20 (Ethereum)
-//  Author   : mservage (42 student)
-// ============================================================
-
 /**
  * @title IERC20
  * @dev Interface standard ERC-20.
@@ -47,11 +41,6 @@ interface IERC20 {
     /// @dev Émis lors d'un appel à approve()
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
-
-// ============================================================
-//  Ownable — Gestion de la propriété (ownership)
-//  Permet de restreindre certaines fonctions au seul propriétaire
-// ============================================================
 
 /**
  * @title Ownable
@@ -109,10 +98,6 @@ contract Ownable {
     }
 }
 
-// ============================================================
-//  Mat42Coin — Implémentation ERC-20
-// ============================================================
-
 /**
  * @title Mat42Coin
  * @dev Token ERC-20 avec mécanisme de mint (création) réservé au propriétaire
@@ -126,8 +111,6 @@ contract Ownable {
  *  - Supply max: 10 000 000 M42 (plafond anti-inflation)
  */
 contract Mat42Coin is IERC20, Ownable {
-
-    // --- Métadonnées du token ---
 
     /// @dev Nom complet du token
     string private constant TOKEN_NAME     = "Mat42Coin";
@@ -144,8 +127,6 @@ contract Mat42Coin is IERC20, Ownable {
     /// @dev Supply initiale : 1 000 000 tokens mintés au déployeur
     uint256 private constant INITIAL_SUPPLY = 1_000_000 * (10 ** 18);
 
-    // --- État du contrat ---
-
     /// @dev Supply totale actuellement en circulation
     uint256 private _totalSupply;
 
@@ -155,17 +136,11 @@ contract Mat42Coin is IERC20, Ownable {
     /// @dev Allowances : _allowances[owner][spender] = montant autorisé
     mapping(address => mapping(address => uint256)) private _allowances;
 
-    // --- Événements spécifiques ---
-
     /// @dev Émis lors de la création de nouveaux tokens (mint)
     event Mint(address indexed to, uint256 amount);
 
     /// @dev Émis lors de la destruction de tokens (burn)
     event Burn(address indexed from, uint256 amount);
-
-    // ============================================================
-    //  Constructeur
-    // ============================================================
 
     /**
      * @dev Déploie le contrat et mint la supply initiale vers le déployeur.
@@ -175,9 +150,7 @@ contract Mat42Coin is IERC20, Ownable {
         _mint(msg.sender, INITIAL_SUPPLY);
     }
 
-    // ============================================================
     //  Fonctions de lecture (view) — ERC-20
-    // ============================================================
 
     /// @notice Retourne le nom complet du token
     function name() public pure returns (string memory) {
@@ -217,9 +190,7 @@ contract Mat42Coin is IERC20, Ownable {
         return MAX_SUPPLY;
     }
 
-    // ============================================================
-    //  Fonctions d'écriture — ERC-20
-    // ============================================================
+    //  Fonctions d'écriture — ERC-20 - coute du gas
 
     /**
      * @notice Transfère des tokens vers une adresse destinataire.
@@ -261,9 +232,7 @@ contract Mat42Coin is IERC20, Ownable {
         return true;
     }
 
-    // ============================================================
     //  Fonctions Owner — Mint
-    // ============================================================
 
     /**
      * @notice Crée de nouveaux tokens et les envoie à une adresse.
@@ -276,9 +245,7 @@ contract Mat42Coin is IERC20, Ownable {
         _mint(to, amount);
     }
 
-    // ============================================================
     //  Fonctions publiques — Burn
-    // ============================================================
 
     /**
      * @notice Détruit des tokens depuis ton propre solde.
@@ -288,10 +255,6 @@ contract Mat42Coin is IERC20, Ownable {
     function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
-
-    // ============================================================
-    //  Fonctions internes
-    // ============================================================
 
     /**
      * @dev Logique interne de transfert.
