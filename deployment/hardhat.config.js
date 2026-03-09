@@ -13,6 +13,14 @@ require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  paths: {
+    // Sources moved to top-level `code/contracts`
+    sources: "../code/contracts",
+    // keep artifacts/cache inside deployment folder
+    artifacts: "./artifacts",
+    cache: "./cache",
+    tests: "./test"
+  },
   // Version du compilateur Solidity utilisée
   solidity: {
     version: "0.8.20",
