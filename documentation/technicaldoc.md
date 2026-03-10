@@ -65,7 +65,6 @@ Créer un fichier `.env` :
 SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/<YOUR_API_KEY>
 PRIVATE_KEY=0x...        # wallet déployeur (owner)
 PRIVATE_KEY_2=0x...      # second wallet (demo.js uniquement)
-ETHERSCAN_API_KEY=...    # optionnel
 ```
 
 > Ne jamais commiter `.env`.
@@ -92,18 +91,3 @@ const contract = await factory.deploy();                       // envoie la tx d
 await contract.waitForDeployment();                            // attend la confirmation
 console.log(await contract.getAddress());                      // affiche l'adresse
 ```
-
-Le constructeur de `Mat42Coin` ne prend aucun argument, donc `deploy()` est appelé sans paramètre.
-
-### `hardhat.config.js`
-
-- `paths.sources` pointe sur `../code/contracts` (contrats hors du dossier `deployment/`).
-- Compilateur `0.8.20`, optimiseur activé avec `runs: 200` (compromis taille du bytecode / coût d'exécution).
-- Deux réseaux : `hardhat` (chainId 31337, local) et `sepolia` (chainId 11155111).
-- `SEPOLIA_RPC_URL` et `PRIVATE_KEY` sont lus depuis `.env` via `dotenv`.
-
-### `scripts/demo.js`
-
-Nécessite un contrat déjà déployé. Mettre à jour `CONTRACT_ADDRESS` dans le fichier avant exécution.
-
-Le script instancie deux wallets (`wallet1` = owner, `wallet2` = tiers) depuis les variables d'env, puis enchaîne : affichage des infos du token, `transfer`, `approve`/`transferFrom`, `mint` et `burn`, avec les soldes affichés avant/après chaque opération.
