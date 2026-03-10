@@ -61,3 +61,8 @@ En plus :
 - mint (réservé au owner)
 - burn
 - gestion de l'ownership
+
+
+## verif
+
+https://sepolia.etherscan.io/address/<contract adress>

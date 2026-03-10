@@ -1,8 +1,8 @@
 const { ethers } = require("hardhat");
-const { abi: ABI } = require("../artifacts/contracts/Mat42Coin.sol/Mat42Coin.json");
+const { abi: ABI } = require("./artifacts/code/Mat42Coin.sol/Mat42Coin.json");
 
 // Adresse du contrat déjà déployé sur Sepolia
-const CONTRACT_ADDRESS = "0xC0321F0053610207D92FE2C7FBdd6796310eBb3A";
+const CONTRACT_ADDRESS = "0xea6371a9B144af87598E06AF5E2454D240fd01c5";
 
 async function main() {
   const provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
@@ -125,22 +125,27 @@ async function main() {
 
 
   // Tests
+  console.log("\n--- Transferts ---");
   await transfer(contract1, wallet2, "100"); // 100 M42 du compte1 vers compte2
   await transfer(contract2, wallet1, "50"); // 50 M42 du compte2 vers compte1
   await transfer(contract1, wallet2, "100000"); // 100000 M42 du compte1 vers compte2 (doit échouer)
 
+  console.log("\n--- Approvals et transferFrom ---");
   await showAllowance(contract1, wallet2, wallet1);
   await approve(contract1, wallet1, wallet2, "51"); // 51 M42 du compte2 vers compte1
   await transferFrom(contract1, wallet2, wallet1, "50"); // 50 M42 du compte2 vers compte1 via transferFrom
   await transferFrom(contract1, wallet2, wallet1, "5000"); // 5000 M42 du compte2 vers compte1 via transferFrom
   await transferFrom(contract1, wallet2, wallet1, "1"); // 1 M42 du compte2 vers compte1 via transferFrom
 
+
+  console.log("\n--- Mint et Burn ---");
   await mint(contract1, wallet2, "500"); // 500 M42 mintés par le owner pour compte2
   await mint(contract2, wallet2, "100"); // 100 M42 mintés par compte2 (doit échouer car pas owner)
   
   await burn(contract2, "200"); // 200 M42 burnés par compte2
   await burn(contract2, "100000"); // 100000 M42 burnés par compte2 (doit échouer car pas assez de balance);
 
+  console.log("\n--- Transfert de propriété ---");
   await showOwner(contract1);
   await transferOwnership(contract1, wallet2);
   await showOwner(contract1);

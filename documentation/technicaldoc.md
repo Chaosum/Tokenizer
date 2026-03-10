@@ -44,16 +44,7 @@
 
 ## Déploiement
 
-### Prérequis
-
-- Node.js v18+
-- Wallet avec ETH Sepolia (faucet)
-- Clé API Alchemy ou Infura (RPC Sepolia)
-- Clé API Etherscan (optionnel, vérification)
-
 ### Setup
-
-Depuis `deployment/` :
 
 ```bash
 npm install
@@ -62,12 +53,11 @@ npm install
 Créer un fichier `.env` :
 
 ```env
-SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/<YOUR_API_KEY>
+SEPOLIA_RPC_URL=https://11155111.rpc.thirdweb.com/
 PRIVATE_KEY=0x...        # wallet déployeur (owner)
 PRIVATE_KEY_2=0x...      # second wallet (demo.js uniquement)
 ```
 
-> Ne jamais commiter `.env`.
 
 ### Commandes
 
@@ -91,3 +81,4 @@ const contract = await factory.deploy();                       // envoie la tx d
 await contract.waitForDeployment();                            // attend la confirmation
 console.log(await contract.getAddress());                      // affiche l'adresse
 ```
+
